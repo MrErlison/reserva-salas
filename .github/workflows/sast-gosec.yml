@@ -1,0 +1,25 @@
+name: TCC-USP
+
+on:
+  push:
+    branches: ["tcc-usp"]
+
+permissions:
+  issues: write
+  contents: write
+  pull-requests: write
+
+jobs:
+
+  gosec:
+    name: SAST Gosec
+    runs-on: ubuntu-latest
+    env:
+      GO111MODULE: on
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: './...'
