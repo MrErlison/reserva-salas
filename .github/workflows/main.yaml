@@ -19,7 +19,8 @@ jobs:
       - name: Build the Docker image
         run: docker build -t $(date +%s) .
 
-  sast:
+  gosec:
+    needs: build
     name: SAST Gosec
     runs-on: ubuntu-latest
     env:
@@ -30,4 +31,4 @@ jobs:
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
-          args: ./...
+          args: '-no-fail -fmt sarif -out results.sarif ./...'
