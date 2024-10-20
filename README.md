@@ -9,3 +9,5 @@ Exemplo de aplicação utilizada no curso Hackers do Bem
 ![SAST HoruSec](https://github.com/MrErlison/reserva-salas/actions/workflows/sast-horusec.yml/badge.svg)
 
 ![SAST Dependency check](https://github.com/MrErlison/reserva-salas/actions/workflows/sast-depency-check.yml/badge.svg)
+
+![DAST Zap-Proxy](https://github.com/MrErlison/reserva-salas/actions/workflows/dast-zap-proxy.yml/badge.svg)

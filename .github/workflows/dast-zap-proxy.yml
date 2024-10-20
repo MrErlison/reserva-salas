@@ -1,0 +1,33 @@
+name: ZAP-Proxy
+
+on:
+  push:
+    branches: ["tcc-usp"]
+
+permissions:
+  issues: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  zap_proxy:
+    needs: 
+      - build
+    name: DAST - ZAP Proxy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t docker-image .
+
+      - name: Run application
+        run: |
+          docker run -d -p 8080:8080 --name reserva docker-image
+          sleep 10
+      - name: Zap Scan
+        uses: zaproxy/action-full-scan@v0.10.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: "http://localhost:8080"
