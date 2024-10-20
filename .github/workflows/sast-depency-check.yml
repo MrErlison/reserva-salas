@@ -1,0 +1,50 @@
+name: Dependency-Check
+
+on:
+  push:
+    branches: ["tcc-usp"]
+
+permissions:
+  issues: write
+  contents: write
+  pull-requests: write
+
+jobs:
+
+  dependency_check:
+    needs: test
+    name: SAST - Dependency-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Install dependencies
+        run: |
+          go mod init example.com/m/v2
+          go get .
+
+      - name: Check dependency
+        uses: dependency-check/Dependency-Check_Action@main
+        id: Dependency-Check
+        with:
+          project: "reserva-salas"
+          path: "."
+          format: "HTML"
+          out: "reports"
+          args: >
+            --scan "**/*.go"
+            --scan "go.mod"
+            --failOnCVSS 7
+            --enableRetired
+            
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dependency-Check report
+          path: ${{github.workspace}}/reports

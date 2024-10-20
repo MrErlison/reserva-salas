@@ -1,4 +1,4 @@
-name: TCC-USP
+name: Build
 
 on:
   push:
