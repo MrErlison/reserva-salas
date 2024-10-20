@@ -18,11 +18,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t docker-image .
+        run: docker build -t ${{ github.sha }} .
 
       - name: Run application
         run: |
-          docker run -d -p 8080:8080 --name reserva docker-image
+          docker run -d -p 8080:8080 --name reserva ${{ github.sha }}
           sleep 10
       - name: Zap Scan
         uses: zaproxy/action-full-scan@v0.10.0
