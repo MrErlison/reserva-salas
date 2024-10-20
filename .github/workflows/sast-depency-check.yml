@@ -12,7 +12,6 @@ permissions:
 jobs:
 
   dependency_check:
-    needs: test
     name: SAST - Dependency-check
     runs-on: ubuntu-latest
     steps:
