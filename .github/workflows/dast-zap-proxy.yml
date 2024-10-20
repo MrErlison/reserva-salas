@@ -11,8 +11,6 @@ permissions:
 
 jobs:
   zap_proxy:
-    needs: 
-      - build
     name: DAST - ZAP Proxy
     runs-on: ubuntu-latest
     steps:
